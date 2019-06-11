@@ -9,10 +9,10 @@ public class ArenaConquest extends JFrame
   static RPGCharacter player = new RPGCharacter();
   static JFrame frame = new JFrame("Arena Conquest");
   static boolean developer=false;
-  
+
   public static void mainMenu()
   {
-    //Opens the main menu 
+    //Opens the main menu
     int buttonPressed=0;
     JCanvas menuCanvas=new JCanvas();
     frame.setSize(1200,950);
@@ -26,12 +26,12 @@ public class ArenaConquest extends JFrame
     JButton exitDesktop = new JButton("Exit To Desktop");
     JBox hOutline;
     JBox subVOutline;
-    JBox vOutline = JBox.vbox(menuCanvas,JBox.vspace(50), 
-                              hOutline=JBox.hbox(JBox.hglue(), 
+    JBox vOutline = JBox.vbox(menuCanvas,JBox.vspace(50),
+                              hOutline=JBox.hbox(JBox.hglue(),
                                                  subVOutline=JBox.vbox( newGame,JBox.vspace(50), loadGame,JBox.vspace(50), options,JBox.vspace(50),exitDesktop,JBox.vspace(50)),
                                                  JBox.hglue() ));
     frame.add(vOutline);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(newGame, "newGame");
@@ -53,7 +53,7 @@ public class ArenaConquest extends JFrame
       if(name.equals("loadGame"))
       {
         //opens a highlevel game used for bug testing
-        developer=true;
+        //developer=true;
         player.name="Nader";
         player.maxHealth=1000;
         player.health=player.maxHealth;
@@ -84,7 +84,7 @@ public class ArenaConquest extends JFrame
         frame.dispose();
         System.exit(0);
         buttonPressed=1;
-        
+
       }
     }
   }
@@ -103,7 +103,7 @@ public class ArenaConquest extends JFrame
     JButton back=new JButton("Back");
     JBox vOutline = JBox.vbox(howToPlay, JBox.vglue(), back);
     frame.add(vOutline);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(back, "back");
@@ -113,7 +113,7 @@ public class ArenaConquest extends JFrame
       String name=events.getName(event);
       if(name.equals("back"))
       {
-        
+
         frame.remove(vOutline);
         frame.repaint();
         mainMenu();
@@ -123,8 +123,8 @@ public class ArenaConquest extends JFrame
   }
   public static void setStats()
   {
-    
-    int buttonPressed = 0; 
+
+    int buttonPressed = 0;
     JCanvas statCanvas=new JCanvas();
     BufferedImage logo = statCanvas.loadImage("ArenaConquest logo.png");
     frame.setIconImage(logo);
@@ -165,13 +165,13 @@ public class ArenaConquest extends JFrame
     JBox vOutline = JBox.vbox(statCanvas, JBox.vspace(10),
                               pointCounter,
                               hOutlineName,JBox.vspace(10),
-                              hOutlineHealth,JBox.vspace(10), 
+                              hOutlineHealth,JBox.vspace(10),
                               hOutlineAttack,JBox.vspace(10),
                               hOutlineDefence,JBox.vspace(10),
                               hOutlineSpeed,JBox.vspace(10),
                               finish);
     frame.add(vOutline);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(finish, "finish");
@@ -199,7 +199,7 @@ public class ArenaConquest extends JFrame
         player.level=1;
         player.exp=0;
         player.gold=0;
-        
+
       }
     }
     //creates the characters main moveset
@@ -208,7 +208,7 @@ public class ArenaConquest extends JFrame
     player.moveSet[2]="blank";
     player.moveSet[3]="blank";
   }
-  
+
   public static void battle(RPGCharacter rEnemy, int gameModeDefiner)
   {
     RPGCharacter[] fighter = new RPGCharacter[2];
@@ -240,11 +240,13 @@ public class ArenaConquest extends JFrame
     randomEnemySprite[13] = battleCanvas.loadImage("finalBoss.png");
     randomEnemySprite[14] = battleCanvas.loadImage("finalBosspt2.png");
     //if the developer file is loaded, there are some special sprites for the final boss
+    /*
     if(developer)
     {
       randomEnemySprite[13] = battleCanvas.loadImage("SephirothSolomon.png");
       randomEnemySprite[14] = battleCanvas.loadImage("Solomonster.png");
     }
+    */
     BufferedImage battleScreen = battleCanvas.loadImage("battleScreen.png");
     //displays the users moveset as buttons
     JButton moveOne = new JButton("1:"+player.moveSet[0]);
@@ -282,16 +284,16 @@ public class ArenaConquest extends JFrame
     }
     battleCanvas.drawImage(battleScreen, 0,0 );
     battleCanvas.drawImage(randomEnemySprite[a],600, 74);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
-    String otherMoveUsed = "blank"; 
+    String otherMoveUsed = "blank";
     while(fighter[0].health>0 && fighter[1].health>0)
     {
       battleCanvas.startBuffer();
       battleCanvas.clear();
       battleCanvas.drawImage(battleScreen, 0,0 );
       battleCanvas.drawImage(randomEnemySprite[a],600, 74);
-      
+
       //selects the enemies move
       do
       {
@@ -306,10 +308,10 @@ public class ArenaConquest extends JFrame
       es.listenTo(moveThree, "moveThree");
       es.listenTo(moveFour, "moveFour");
       es.listenTo(quit, "run");
-      
+
       do
       {
-        
+
         e=es.waitEvent();
         nameEvent=es.getName(e);
         if(nameEvent.equals("moveOne"))
@@ -329,7 +331,7 @@ public class ArenaConquest extends JFrame
         {
           if(player.moveSet[1]!="blank")
           {
-            
+
             fighter= fighter[0].battle(fighter[1], player.moveSet[1] , otherMoveUsed);
             battleCanvas.drawString(fighter[0].name+" used "+player.moveSet[1],80,480);
             choseMove=1;
@@ -340,7 +342,7 @@ public class ArenaConquest extends JFrame
         {
           if(player.moveSet[2]!="blank")
           {
-            
+
             fighter=fighter[0].battle(fighter[1],player.moveSet[2],  otherMoveUsed);
             battleCanvas.drawString(fighter[0].name+" used "+player.moveSet[2],80,480);
             choseMove=1;
@@ -351,7 +353,7 @@ public class ArenaConquest extends JFrame
         {
           if(player.moveSet[3]!="blank")
           {
-            
+
             fighter=fighter[0].battle(fighter[1],player.moveSet[3],  otherMoveUsed);
             battleCanvas.drawString(fighter[1].name+" used "+player.moveSet[3],80,480);
             choseMove=1;
@@ -368,7 +370,7 @@ public class ArenaConquest extends JFrame
           overWorld();
         }
       }while(choseMove==0);
-      
+
       choseMove=0;
       //displays what the enemy chose
       battleCanvas.drawString(fighter[1].name+" used "+otherMoveUsed,80,500);
@@ -408,7 +410,7 @@ public class ArenaConquest extends JFrame
           JButton cont = new JButton("Continue");
           JBox endgame = JBox.vbox(victory,congrats, cont);
           frame.add(endgame);
-          frame.repaint(); 
+          frame.repaint();
           frame.setVisible(true);
           JEventQueue es=new JEventQueue();
           EventObject e;
@@ -436,7 +438,7 @@ public class ArenaConquest extends JFrame
       overWorld();
     }
   }
-  
+
   public static void main(String args[])
   {
     mainMenu();
@@ -452,7 +454,7 @@ public class ArenaConquest extends JFrame
     JButton gauntletButton = new JButton("Gauntlet");
     JBox selectBox = JBox.vbox(freePlay, gauntlet, freePlayButton, gauntletButton);
     frame.add(selectBox);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(freePlayButton, "freePlay");
@@ -474,7 +476,7 @@ public class ArenaConquest extends JFrame
         gauntlet();
       }
     }
-    
+
   }
   public static void gauntlet()
   {
@@ -491,7 +493,7 @@ public class ArenaConquest extends JFrame
     speedBoss.moveSet[1]=("Parry");
     speedBoss.moveSet[2]=("Stab");
     speedBoss.moveSet[3]=("Last Resort");
-    
+
     RPGCharacter attackBoss = new RPGCharacter();
     attackBoss.name = "Akadian the King of Attack";
     attackBoss.maxHealth = 280;
@@ -504,7 +506,7 @@ public class ArenaConquest extends JFrame
     attackBoss.moveSet[1]=("Charge");
     attackBoss.moveSet[2]=("Lunge");
     attackBoss.moveSet[3]=("Bash");
-    
+
     RPGCharacter defenseBoss = new RPGCharacter();
     defenseBoss.name = "Dianne the Queen of Defense";
     defenseBoss.maxHealth = 300;
@@ -517,7 +519,7 @@ public class ArenaConquest extends JFrame
     defenseBoss.moveSet[1]=("Bash");
     defenseBoss.moveSet[2]=("Stab");
     defenseBoss.moveSet[3]=("Parry");
-    
+
     RPGCharacter finalBoss = new RPGCharacter();
     finalBoss.name = "King Solomon";
     finalBoss.maxHealth = 700;
@@ -530,11 +532,11 @@ public class ArenaConquest extends JFrame
     finalBoss.moveSet[1]=("Stab");
     finalBoss.moveSet[2]=("Last Resort");
     finalBoss.moveSet[3]=("Bash");
-    
-    
-    
-    
-    
+
+
+
+
+
     RPGCharacter finalBossp2 = new RPGCharacter();
     finalBossp2.name = "Solomonster";
     finalBossp2.maxHealth = 1000;
@@ -547,20 +549,20 @@ public class ArenaConquest extends JFrame
     finalBossp2.moveSet[1]=("Ragnarok");
     finalBossp2.moveSet[2]=("Excalibur");
     finalBossp2.moveSet[3]=("Starfall");
-    
+
     battle(speedBoss, 1);
     battle(attackBoss, 2);
     battle(defenseBoss, 3);
     battle(finalBoss, 4);
-    
-    // the 'cutscene' after defeating the first boss phase 
+
+    // the 'cutscene' after defeating the first boss phase
      int buttonPressed=0;
     JLabel partTwo = new JLabel("Announcer: Congratulations!!! The new king of the arena is... ");
     JLabel secDia = new JLabel("???: Not so fast! You haven't defeated me yet");
     JButton cont=new JButton("Continue");
     JBox vOutline = JBox.vbox(partTwo,secDia, JBox.vglue(), cont);
     frame.add(vOutline);
-        frame.repaint(); 
+        frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(cont, "cont");
@@ -570,17 +572,17 @@ public class ArenaConquest extends JFrame
       String name=events.getName(event);
       if(name.equals("cont"))
       {
-        
+
         frame.remove(vOutline);
         frame.repaint();
         buttonPressed=1;
       }
     }
-    
+
     battle(finalBossp2, 5);
     overWorld();
   }
-  
+
   public static void freePlay()
   {
     //creates a random enemy and sends the user to fight them
@@ -603,7 +605,7 @@ public class ArenaConquest extends JFrame
       JLabel parryDef = new JLabel("Parry: Price: 1500g: Deals 20 damage, uses your opponents attack stat in damage calculations");
       JLabel restDef = new JLabel("Rest: Price: 3000g: Restores 30% of your maximum health");
       JLabel lastResortDef = new JLabel("Last Resort: Price: 5000g: Deals 100 damage, leaves the user with 1 health point");
-      JButton stab = new JButton("Stab"); 
+      JButton stab = new JButton("Stab");
       JButton lunge = new JButton("Lunge");
       JButton bash = new JButton("Bash");
       JButton charge = new JButton("Charge");
@@ -615,7 +617,7 @@ public class ArenaConquest extends JFrame
       JBox moveBox = JBox.vbox(wallet,JBox.vglue(), stab,JBox.vglue(), lunge,JBox.vglue(), bash,JBox.vglue(), charge,JBox.vglue(), parry,JBox.vglue(), rest,JBox.vglue(), lastResort);
       JBox shopBox = JBox.hbox(defBox, moveBox, back);
       frame.add(shopBox);
-      frame.repaint(); 
+      frame.repaint();
       frame.setVisible(true);
       JEventQueue events=new JEventQueue();
       events.listenTo(stab, "stab");
@@ -647,11 +649,11 @@ public class ArenaConquest extends JFrame
             newMove="Lunge";
             buttonPressed=1;
           }
-          
+
         }
         if(name.equals("bash"))
         {
-          
+
           if(player.gold>=2000)
           {
             player.gold=player.gold-2000;
@@ -661,7 +663,7 @@ public class ArenaConquest extends JFrame
         }
         if(name.equals("charge"))
         {
-          
+
           if(player.gold>=2500)
           {
             player.gold=player.gold-2500;
@@ -671,7 +673,7 @@ public class ArenaConquest extends JFrame
         }
         if(name.equals("parry"))
         {
-          
+
           if(player.gold>=1500)
           {
             player.gold=player.gold-1500;
@@ -681,7 +683,7 @@ public class ArenaConquest extends JFrame
         }
         if(name.equals("rest"))
         {
-          
+
           if(player.gold>=3000)
           {
             player.gold=player.gold-3000;
@@ -691,7 +693,7 @@ public class ArenaConquest extends JFrame
         }
         if(name.equals("lastResort"))
         {
-          
+
           if(player.gold>=5000)
           {
             player.gold=player.gold-5000;
@@ -716,7 +718,7 @@ public class ArenaConquest extends JFrame
       JButton fourthMove = new JButton(player.moveSet[3]);
       JBox chooseMove = JBox.vbox(replaceMove, firstMove, secMove, thirdMove,fourthMove);
       frame.add(chooseMove);
-      frame.repaint(); 
+      frame.repaint();
       frame.setVisible(true);
       buttonPressed=0;
       JEventQueue es=new JEventQueue();
@@ -773,7 +775,7 @@ public class ArenaConquest extends JFrame
       JLabel powerPointCounter = new JLabel("You have "+player.powerPoints+" Skill Points");
       JBox pointShop = JBox.vbox(powerPointCounter, improveStat, hp, attack ,defence,speed, back );
       frame.add(pointShop);
-      frame.repaint(); 
+      frame.repaint();
       frame.setVisible(true);
       JEventQueue events=new JEventQueue();
       events.listenTo(hp, "hp");
@@ -836,7 +838,7 @@ public class ArenaConquest extends JFrame
           overWorld();
         }
       }
-      
+
     }while(true);
   }
   public static void overWorld()
@@ -850,16 +852,16 @@ public class ArenaConquest extends JFrame
     BufferedImage charUpStill = canvas.loadImage("charUpStill.png");
     BufferedImage charUp1 = canvas.loadImage("charUp1.png");
     BufferedImage charUp2 = canvas.loadImage("charUp2.png");
-    BufferedImage charDownStill = canvas.loadImage("charDownStill.png");
+    //BufferedImage charDownStill = canvas.loadImage("charDownStill.png");
     BufferedImage charDown1 = canvas.loadImage("charDown1.png");
     BufferedImage charDown2 = canvas.loadImage("charDown2.png");
-    BufferedImage charRightStill = canvas.loadImage("charRightStill.png");
+    //BufferedImage charRightStill = canvas.loadImage("charRightStill.png");
     BufferedImage charRight1 = canvas.loadImage("charRight1.png");
     BufferedImage charRight2 = canvas.loadImage("charRight2.png");
-    BufferedImage charLeftStill = canvas.loadImage("charLeftStill.png");
+    //BufferedImage charLeftStill = canvas.loadImage("charLeftStill.png");
     BufferedImage charLeft1 = canvas.loadImage("charLeft1.png");
     BufferedImage charLeft2 = canvas.loadImage("charLeft2.png");
-    
+
     canvas.drawImage(map,0,0);
     canvas.drawImage(charUpStill,x,y);
     JButton upButton = new JButton("^");
@@ -872,7 +874,7 @@ public class ArenaConquest extends JFrame
     JBox dPad = JBox.vbox(upBox,horButtons,downBox);
     JBox overWorldBox= JBox.vbox(canvas, dPad);
     frame.add(overWorldBox);
-    frame.repaint(); 
+    frame.repaint();
     frame.setVisible(true);
     JEventQueue events=new JEventQueue();
     events.listenTo(upButton, "move up");
@@ -929,9 +931,9 @@ public class ArenaConquest extends JFrame
           frame.remove(overWorldBox);
           frame.repaint();
           gameModeSelect();
-          
+
         }
-        
+
       }
       if(name.equals("move down"))
       {
@@ -939,11 +941,11 @@ public class ArenaConquest extends JFrame
         canvas.drawImage(map,0,0);
         if(step==0)
         {
-          canvas.drawImage(charDown1,x,y); 
+          canvas.drawImage(charDown1,x,y);
           y=y+10;
           step++;
         }
-        
+
         else if(step==1)
         {
           canvas.drawImage(charDown2,x,y);
